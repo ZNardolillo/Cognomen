@@ -264,7 +264,7 @@ def convert(script, main_index=0):
         converted_script += "\tnameGen()\n"
 
     converted_script += "\t" + f"return {return_name}"
-    with open('converted_functions.py', 'a', encoding ="utf-8") as f:
+    with open('../converted_functions.py', 'a', encoding ="utf-8") as f:
         f.write("\n" + converted_script + "\n")
 
     # Tests the function once in the console

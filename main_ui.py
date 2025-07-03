@@ -10,7 +10,7 @@ from PIL import Image, ImageTk
 import pygame
 import webbrowser
 from master_dict_file import master_keys
-import name_generator
+from MetaTools import name_generator
 import converted_functions
 
 
@@ -30,7 +30,7 @@ window.geometry('1500x800')
 # it's fine (optimal, really) when it's obscured by the other widgets.
 
 # Background image setup
-original_background = Image.open("dragon.png")
+original_background = Image.open("Assets/dragon.png")
 dragon = ImageTk.PhotoImage(original_background)
 bg_frame = tk.Frame(master=window)
 bg_frame.place(x=0, y=0, relwidth=1, relheight=1)
@@ -38,7 +38,7 @@ canvas = Canvas(bg_frame)
 canvas.place(x=0, y=0, relwidth=1, relheight=1)
 bg_image = canvas.create_image(750, 400, image=dragon, anchor='center')
 
-title_source = Image.open("Logo5.png")
+title_source = Image.open("Assets/Logo5.png")
 title = ImageTk.PhotoImage(title_source)
 title_place = canvas.create_image(750, 50, image=title, anchor='center')
 
@@ -62,20 +62,20 @@ canvas.bind("<Configure>", resize_bg)
 
 # Grabs previous user mute setting, or creates it if it doesn't exist
 try:
-    with open("user_settings.txt") as f:
+    with open("UserData/user_settings.txt") as f:
        mute = f.read()
        if "True" in mute:
           mute = [True]
        else:
           mute = [False]
 except:
-    with open('user_settings.txt', 'w', encoding="utf-8") as f:
+    with open('UserData/user_settings.txt', 'w', encoding="utf-8") as f:
         f.write("False")
         mute = [False]
 
 pygame.mixer.init()
-muteoff = PhotoImage(file="MuteOff.png").subsample(4,4)
-muteon = PhotoImage(file="MuteOn.png").subsample(4,4)
+muteoff = PhotoImage(file="Assets/MuteOff.png").subsample(4, 4)
+muteon = PhotoImage(file="Assets/MuteOn.png").subsample(4, 4)
 
 # Mute button will stop existing sounds and prevent future ones
 def mute_toggle(mute_list):
@@ -85,14 +85,14 @@ def mute_toggle(mute_list):
         canvas.itemconfig(mute_icon, image=muteon)
     else:
         canvas.itemconfig(mute_icon, image=muteoff)
-    with open('user_settings.txt', 'w', encoding ="utf-8") as f:
+    with open('UserData/user_settings.txt', 'w', encoding ="utf-8") as f:
       f.write(str(mute_list[0]))
 
 # Plays a sound effect when called. There are 3 total sound effects:
 # Add, remove, and use
 def play_sound(soundEffect):
     if not mute[0]:
-        pygame.mixer.music.load(f"{soundEffect}.mp3")
+        pygame.mixer.music.load(f"Assets/{soundEffect}.mp3")
         pygame.mixer.music.play()
 
 # This isn't coded as a button, but it is effectively a button
@@ -109,7 +109,7 @@ rect = canvas.create_rectangle(390, 100, 530, 240, outline="", fill="", tag="rec
 
 
 # Help button
-help = PhotoImage(file="QuestionMark.png")
+help = PhotoImage(file="Assets/QuestionMark.png")
 help_icon = canvas.create_image(390, 240, image=help, anchor="nw")
 tag_name2 = "rect2"
 rect2 = canvas.create_rectangle(390, 240, 530, 380, outline="", fill="", tag="rect2")
@@ -206,7 +206,7 @@ favorite_generators_scroll.config(command=favorite_generators.yview)
 
 # Imports user favorite generators. The main program saves them as a .txt file
 def initializeFavoriteGenerators():
-    with open('favorite_generators_storage.txt', 'r', encoding="utf-8") as f:
+    with open('UserData/favorite_generators_storage.txt', 'r', encoding="utf-8") as f:
         user_generators = f.read()
         user_generators = user_generators.split("@")
     if not user_generators[-1]:
@@ -215,7 +215,7 @@ def initializeFavoriteGenerators():
     return user_generators
 
 def resetFavoriteGenerators():
-    with open('favorite_generators_storage.txt', 'w', encoding="utf-8") as f:
+    with open('UserData/favorite_generators_storage.txt', 'w', encoding="utf-8") as f:
         f.write("Bandit Names@Chinese Names@Demon Names@Dwarf Names@Edwardian Names@Elf Names@Hispanic Names@Moorish Names@Native American Names@Orc Names@")
 
 # If favorites file doesn't exist, it will create a default one
@@ -250,7 +250,7 @@ favorite_names.pack(fill=BOTH, expand=True)
 favorite_names_scroll.config(command=favorite_names.yview)
 
 def getStoredNames():
-    with open('favorite_names_storage.txt', 'r', encoding="utf-8") as f:
+    with open('UserData/favorite_names_storage.txt', 'r', encoding="utf-8") as f:
         user_names = f.read()
         user_names = user_names.split("@")
         #Ignore blank entries
@@ -263,7 +263,7 @@ def cullStoredNames():
     excess = len(user_names) - 100
     if excess > 0:
         print("test")
-        with open('favorite_names_storage.txt', 'w', encoding="utf-8") as f:
+        with open('UserData/favorite_names_storage.txt', 'w', encoding="utf-8") as f:
             for i in range(100):
                 f.write(user_names[excess+i] + "@")
         user_names = getStoredNames()
@@ -432,7 +432,7 @@ def add_favorite_generator(event):
             for i in sorted_list:
                 favorite_generators.insert(END, i)
             # Save the new favorite permanently
-            with open('favorite_generators_storage.txt', 'a', encoding="utf-8") as f:
+            with open('UserData/favorite_generators_storage.txt', 'a', encoding="utf-8") as f:
                 f.write(values[column] + "@")
             play_sound("addNoise")
 
@@ -447,7 +447,7 @@ def remove_favorite_generator(event):
         sorted_list = []
         for i in favorite_generators.get(0, END):
             sorted_list.append(i)
-        with open('favorite_generators_storage.txt', 'w', encoding="utf-8") as f2:
+        with open('UserData/favorite_generators_storage.txt', 'w', encoding="utf-8") as f2:
             for i in sorted_list:
                 f2.write(i + "@")
         play_sound("removeNoise")
@@ -474,7 +474,7 @@ def add_favorite_name(event):
             favorite_names.delete(0, overflow)
         favorite_names.insert(END, selected_item)
         # Save it to the persistent user favorite names for use between sessions
-        with open('favorite_names_storage.txt', 'a', encoding="utf-8") as f:
+        with open('UserData/favorite_names_storage.txt', 'a', encoding="utf-8") as f:
             f.write(selected_item+"@")
         play_sound("addNoise")
         # Scroll to the bottom, since that's the newest entry

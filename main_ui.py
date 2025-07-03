@@ -1,3 +1,7 @@
+# MAIN SCRIPT
+# This tool creates a UI that lets users use 422 name generators, and save
+# favorite generators and favorite names that persist across sessions.
+
 import tkinter as tk
 from tkinter import *
 from tkinter import PhotoImage
@@ -9,8 +13,7 @@ from master_dict_file import master_keys
 import name_generator
 import converted_functions
 
-# This tool creates a UI that lets users use 422 name generators, and save favorite generators
-# and favorite names that persist across sessions.
+
 
 # Main window
 window = tk.Tk()

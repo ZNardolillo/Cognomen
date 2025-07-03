@@ -1,6 +1,10 @@
-import re
-from tokenize import triple_quoted
+# This tool takes a JS script from the fantasy name generator websites and converts it into usable Python
+# There are also some testing tools at the bottom to make sure they work as intended
 
+
+# I don't remember what triple_quoted was used for, but I'm keeping it just in case
+from tokenize import triple_quoted
+import re
 import jsbeautifier
 import importlib
 from all_js_scripts import script_dict
@@ -10,8 +14,6 @@ opts = jsbeautifier.default_options()
 opts.indent_size = 4
 
 
-
-# This tool takes a JS script from the fantasy name generator websites and converts it into usable Python
 def convert(script, main_index=0):
 
     # First, check if the generator has already been converted to avoid writing duplicates

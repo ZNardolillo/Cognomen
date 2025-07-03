@@ -1,3 +1,6 @@
+# This script uses Selenium to open a chrome instance on Fantasynamegenerators.com. It's pretty much
+# deprecated, but this is how I was originally going to make this project work.
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -7,7 +10,7 @@ from master_dict_file import master_dict
 
 options = ChromeOptions()
 
-# I cannot figure out how to make headless mode work, so I'm settling for the rather ghetto method of rendering the window very far offscreen to mimic it
+# I cannot figure out how to make headless mode work, so I'm settling for the rather silly method of rendering the window very far offscreen to mimic it
 # options.add_argument("--headless=new")
 # options.add_argument("--window-size=1920,1080")
 # options.add_argument("--start-maximized")

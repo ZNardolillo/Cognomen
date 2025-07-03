@@ -1,3 +1,6 @@
+# This is the tool I used to retrieve and save all original Javascript functions from the website.
+# It originally messed up the encoding and had lots of incorrect characters, which "encoding_repair.py" fixed.
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -9,61 +12,61 @@ from master_dict_file import master_dict
 
 options = ChromeOptions()
 
-# I cannot figure out how to make headless mode work, so I'm settling for the rather ghetto method of rendering the window very far offscreen to mimic it
+# I cannot figure out how to make headless mode work, so I'm settling for the rather silly method of rendering the window very far offscreen to mimic it
 # options.add_argument("--headless=new")
 # options.add_argument("--window-size=1920,1080")
 # options.add_argument("--start-maximized")
 options.add_argument("--window-position=-10000,0")
 
-# generatorlinks = []
+generatorlinks = []
 
-# # This function gets the link to all the different name generators
-# # I only needed to use it once for fantasy and once for real world names, but you could run it every time to check for new ones
-# def find_all_generators(url, selector):
-#
-#     driver = webdriver.Chrome(options=options)
-#     driver.get(url)
-#
-#     WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
-#     text_box = driver.find_elements(By.CSS_SELECTOR, selector)
-#     for i in text_box:
-#         generatorlinks.append(i.get_attribute("href"))
-#
-# # x is the website, y is the container for all "fantasy/folklore" names, and z is the container for all "real world" names
-# # x = "https://www.fantasynamegenerators.com/"
-# # y = "#navmenus > ul > li:nth-child(2) .mainOl a"
-# # z = "#splitNav a"
-#
-# find_all_generators(x, y)
-# find_all_generators(x, z)
-#
+# This function gets the link to all the different name generators
+# I only needed to use it once for fantasy and once for real world names, but you could run it every time to check for new ones
+def find_all_generators(url, selector):
+
+    driver = webdriver.Chrome(options=options)
+    driver.get(url)
+
+    WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
+    text_box = driver.find_elements(By.CSS_SELECTOR, selector)
+    for i in text_box:
+        generatorlinks.append(i.get_attribute("href"))
+
+# x is the website, y is the container for all "fantasy/folklore" names, and z is the container for all "real world" names
+x = "https://www.fantasynamegenerators.com/"
+y = "#navmenus > ul > li:nth-child(2) .mainOl a"
+z = "#splitNav a"
+
+find_all_generators(x, y)
+find_all_generators(x, z)
+
 # This saves all the entries into a nicely formatted list in a new file
 # I simply copied and pasted it from there so that this none of this had to be run again
-# with open("output.py", "w") as f:
-#     f.write("my_list = ")
-#     json.dump(generatorlinks, f, indent=2)
+with open("output.py", "w") as f:
+    f.write("my_list = ")
+    json.dump(generatorlinks, f, indent=2)
 
 
-# test_dict = {
-#   "Alien Names": "https://www.fantasynamegenerators.com/alien-names.php",
-#   "Amazon Names": "https://www.fantasynamegenerators.com/amazon-names.php",
-#   "Anansi Names": "https://www.fantasynamegenerators.com/anansi-names.php",
-#   "Angel Names": "https://www.fantasynamegenerators.com/angel-names.php",
-#   "Animal Species Names": "https://www.fantasynamegenerators.com/animal-species-names.php",
-#   "Animatronic Names": "https://www.fantasynamegenerators.com/animatronic-names.php",
-#   "Anime Character Names": "https://www.fantasynamegenerators.com/anime-character-names.php",
-#   "Anthousai Names": "https://www.fantasynamegenerators.com/anthousai-names.php",
-#   "Anz\u00fb Names": "https://www.fantasynamegenerators.com/anzu-names.php",
-#   "Apocalypse/Mutant Names": "https://www.fantasynamegenerators.com/apocalypse-mutant-names.php",
-#   "Artificial Intelligence Names": "https://www.fantasynamegenerators.com/artificial-intelligence-names.php",
-#   "Bandit Names": "https://www.fantasynamegenerators.com/bandit-names.php",
-#   "Banshee Names": "https://www.fantasynamegenerators.com/banshee-names.php",
-#   "Barbarian Names": "https://www.fantasynamegenerators.com/barbarian-names.php",
-#   "Basilisk Names": "https://www.fantasynamegenerators.com/basilisk-names.php",
-#   "Birdfolk Names": "https://www.fantasynamegenerators.com/birdfolk-names.php",
-#   "Bluecap Names": "https://www.fantasynamegenerators.com/bluecap-names.php",
-#   "Bounty Hunter Names": "https://www.fantasynamegenerators.com/bounty-hunter-names.php"
-# }
+test_dict = {
+  "Alien Names": "https://www.fantasynamegenerators.com/alien-names.php",
+  "Amazon Names": "https://www.fantasynamegenerators.com/amazon-names.php",
+  "Anansi Names": "https://www.fantasynamegenerators.com/anansi-names.php",
+  "Angel Names": "https://www.fantasynamegenerators.com/angel-names.php",
+  "Animal Species Names": "https://www.fantasynamegenerators.com/animal-species-names.php",
+  "Animatronic Names": "https://www.fantasynamegenerators.com/animatronic-names.php",
+  "Anime Character Names": "https://www.fantasynamegenerators.com/anime-character-names.php",
+  "Anthousai Names": "https://www.fantasynamegenerators.com/anthousai-names.php",
+  "Anz\u00fb Names": "https://www.fantasynamegenerators.com/anzu-names.php",
+  "Apocalypse/Mutant Names": "https://www.fantasynamegenerators.com/apocalypse-mutant-names.php",
+  "Artificial Intelligence Names": "https://www.fantasynamegenerators.com/artificial-intelligence-names.php",
+  "Bandit Names": "https://www.fantasynamegenerators.com/bandit-names.php",
+  "Banshee Names": "https://www.fantasynamegenerators.com/banshee-names.php",
+  "Barbarian Names": "https://www.fantasynamegenerators.com/barbarian-names.php",
+  "Basilisk Names": "https://www.fantasynamegenerators.com/basilisk-names.php",
+  "Birdfolk Names": "https://www.fantasynamegenerators.com/birdfolk-names.php",
+  "Bluecap Names": "https://www.fantasynamegenerators.com/bluecap-names.php",
+  "Bounty Hunter Names": "https://www.fantasynamegenerators.com/bounty-hunter-names.php"
+}
 
 
 # This function retrieves the raw text of a JS file. It's really intended

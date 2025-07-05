@@ -5,7 +5,13 @@ They were all sourced from https://www.fantasynamegenerators.com/ and converted 
 
 # User instructions
 
-Open "main_ui.py" and run it. A window will launch. Click on the big question mark symbol for a detailed tutorial.
+1. Git clone the package
+   
+2. set up your venv
+   
+3. run this command: pip install -r requirements.txt
+
+4. Open "main_ui.py" and run it. A window will launch. Click on the big question mark symbol for a detailed tutorial.
 
 # Developer instructions - main tool
 
